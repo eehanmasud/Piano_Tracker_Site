@@ -155,7 +155,8 @@ def add_piece_page(state: State) -> Page:
         TextBox("title_in", "Song Title"),
         TextBox("composer_in", "Composer Name"),
         SelectBox("diff_in", ["Beginner", "Intermediate", "Advanced"]),
-        CheckBox("mastered_in", "Already Mastered?"),
+        Text("Already Mastered?"),
+        CheckBox("mastered_in", False),
         Button("Save Piece", save_piece),
         Button("Cancel / Back", index)
     ])
@@ -438,6 +439,17 @@ assert_equal(
 assert_equal(
     evaluate_quiz(test_state_quiz, "Key of G").content[1],
     Text("Incorrect! Try again."),
+)
+
+set_site_information(
+    author="Eehan Masud",
+    description=(
+        "A virtual piano studio web app to manage repertoire, "
+        "track practice goals, and test music theory."
+    ),
+    sources="Built using Python and the Drafter web framework.",
+    planning="Designed with dataclasses, list comprehensions, and routes.",
+    links="https://drafter-edu.github.io/drafter/",
 )
 
 start_server(initial_state())
