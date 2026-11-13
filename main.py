@@ -127,6 +127,7 @@ def index(state: State) -> Page:
         Button("Add New Song", add_piece_page),
         Button("Log Practice", log_practice_page),
         Button("Filter Repertoire", filtered_repertoire),
+        Button("Set Weekly Goal", goal_page),
         Button("Theory Quiz", theory_quiz),
         LineBreak(),
         LineBreak(),
@@ -276,6 +277,41 @@ def filtered_repertoire(state: State) -> Page:
     return Page(state, controls + matching_elements)
 
 @route
+def goal_page(state: State) -> Page:
+    """Renders the form page for updating the weekly practice goal.
+
+    Args:
+        state (State): The current global application state.
+
+    Returns:
+        Page: The rendered page with an input box for weekly goal minutes.
+    """
+
+    return Page(state, [
+        Header("Set Weekly Practice Goal"),
+        Text(f"Current Weekly Goal: {state.weekly_goal_minutes} minutes"),
+        LineBreak(),
+        TextBox("goal_in", str(state.weekly_goal_minutes)),
+        Button("Save Goal", update_goal),
+        Button("Back to Dashboard", index)
+    ])
+
+@route
+def update_goal(state: State, goal_in: str) -> Page:
+    """Updates the weekly practice goal in the application state.
+
+    Args:
+        state (State): The current global application state.
+        goal_in (str): The new weekly goal in minutes entered by the user.
+
+    Returns:
+        Page: Redirects to the updated goal_page.
+    """
+
+    state.weekly_goal_minutes = int(goal_in.strip())
+    return index(state)
+
+@route
 def set_difficulty_filter(state: State, level_filter: str) -> Page:
     """Updates the active difficulty filter in the application state.
 
@@ -417,6 +453,18 @@ test_state_filtered = initial_state()
 filtered_page = filtered_repertoire(test_state_filtered)
 assert_equal(filtered_page.state, test_state_filtered)
 assert_equal(len(filtered_page.content) > 0, True)
+
+# goal_page route
+test_state_goal_page = initial_state()
+g_page = goal_page(test_state_goal_page)
+assert_equal(g_page.state, test_state_goal_page)
+assert_equal(g_page.content[0], Header("Set Weekly Practice Goal"))
+
+# update_goal route
+test_state_goal = initial_state()
+updated_goal_page = update_goal(test_state_goal, "300")
+assert_equal(updated_goal_page.state, test_state_goal)
+assert_equal(test_state_goal.weekly_goal_minutes, 300)
 
 # set_difficulty_filter route
 test_state_filter = initial_state()
