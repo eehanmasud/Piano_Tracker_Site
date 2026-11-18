@@ -495,9 +495,9 @@ set_site_information(
         "A virtual piano studio web app to manage repertoire, "
         "track practice goals, and test music theory."
     ),
-    sources="Built using Python and the Drafter web framework.",
-    planning="Designed with dataclasses, list comprehensions, and routes.",
-    links="https://drafter-edu.github.io/drafter/",
+    sources= ["Copy of CS1 Final Project 0_ Pick a Problem.docx", "Copy of CS1 Final Project 1_ Design.docx", "LLM Conversation.docx"]
+    planning= ["Copy of CS1 Final Project 0_ Pick a Problem.docx", "Copy of CS1 Final Project 1_ Design.docx"],
+    links="https://github.com/eehanmasud/Piano_Tracker_Site",
 )
 
 start_server(initial_state())
